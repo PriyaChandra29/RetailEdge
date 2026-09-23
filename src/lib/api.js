@@ -24,10 +24,11 @@ function demoDashboard(timeWindow) {
       { name: "Checkout", value: 94, tone: "warning" }
     ],
     alerts: [
-      { id: 1, title: "Checkout queue exceeded 6", detail: "Lane 3 \xB7 detected 1 min ago", kind: "warning" },
-      { id: 2, title: "Shelf gap detected", detail: "Grocery \xB7 Aisle 7 \xB7 SKU 88213", kind: "warning" },
-      { id: 3, title: "Dairy stock below threshold", detail: "12 units remaining \xB7 replenish now", kind: "success" }
+      { id: 1, title: "Item mismatch detected", detail: "Grocery · Aisle 4 · scanned SKU 44102 doesn't match shelf tag", kind: "warning" },
+      { id: 2, title: "Unscanned items in basket", detail: "Self-checkout · basket scan flagged 2 items not billed", kind: "warning" },
+      { id: 3, title: "Cart verification passed", detail: "Lane 2 · cart contents match the bill", kind: "success" }
     ],
+
     inventory: { inStock: 186, lowStock: 23, outOfStock: 5, skus: 214 },
     queues: [
       { lane: "Lane 1", state: "4 waiting \xB7 6m", warning: true },

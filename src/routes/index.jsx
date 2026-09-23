@@ -24,7 +24,7 @@ import { acknowledgeAlert, dashboardQuery, demoDashboard } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import groceryFeed from "@/assets/cctv-grocery.jpg";
 import checkoutFeed from "@/assets/cctv-checkout.jpg";
-import entranceFeed from "@/assets/cctv-entrance.jpg";
+import basketFeed from "@/assets/cctv-basket.jpg";
 import dairyFeed from "@/assets/cctv-dairy.jpg";
 const Route = createFileRoute("/")({
   head: () => ({
@@ -50,11 +50,12 @@ const navItems = [
 ];
 const timeWindows = ["1h", "4h", "24h"];
 const cameraFeeds = [
-  { id: "CAM-01", name: "Main Grocery Aisle", location: "Grocery · Aisle 4", image: groceryFeed },
-  { id: "CAM-02", name: "Checkout Lanes", location: "Front end · Lanes 1–4", image: checkoutFeed },
-  { id: "CAM-03", name: "Store Entrance", location: "North entrance", image: entranceFeed },
-  { id: "CAM-04", name: "Dairy Section", location: "Chilled goods · Aisle 8", image: dairyFeed }
+  { id: "CAM-01", name: "Checkout Lanes", location: "Front end · Lanes 1–4", image: checkoutFeed, purpose: "Queue & lane monitoring" },
+  { id: "CAM-02", name: "Basket Scanner", location: "Self-checkout · Scan counter", image: basketFeed, purpose: "Scans items in basket" },
+  { id: "CAM-03", name: "Grocery Aisle", location: "Grocery · Aisle 4", image: groceryFeed, purpose: "Item mismatch detection" },
+  { id: "CAM-04", name: "Dairy Section", location: "Chilled goods · Aisle 8", image: dairyFeed, purpose: "Item mismatch detection" }
 ];
+
 function RetailDashboard() {
   const [activeNav, setActiveNav] = useState("Live Overview");
   const [timeWindow, setTimeWindow] = useState("1h");
@@ -239,7 +240,7 @@ Open alerts,${openAlerts}`;
                   <Camera className="size-4 text-primary" />
                   <h2 className="font-display text-[15px] font-semibold">Connected CCTV feeds</h2>
                 </div>
-                <p className="mt-1 text-[11px] text-muted-foreground">Live store views · processed locally at the edge</p>
+                <p className="mt-1 text-[11px] text-muted-foreground">Checkout & aisle cameras · cart and basket verification · mismatch alerts · processed locally at the edge</p>
               </div>
               <span className="flex w-fit items-center gap-1.5 rounded-full bg-success-soft px-2.5 py-1 text-[11px] font-semibold text-success ring-1 ring-success/20">
                 <span className="live-dot size-1.5 rounded-full bg-success" /> 4 of 4 online
@@ -277,6 +278,7 @@ function CameraFeed({ camera, onExpand }) {
       <div className="min-w-0"><p className="truncate text-xs font-semibold">{camera.name}</p><p className="truncate text-[10.5px] text-muted-foreground">{camera.location}</p></div>
       <span className="shrink-0 text-[10px] font-medium text-muted-foreground">1080p · 24fps</span>
     </div>
+    <div className="px-3 pb-3"><span className="inline-flex items-center rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand-soft-foreground ring-1 ring-primary/15">{camera.purpose}</span></div>
   </article>;
 }
 function Metric({ label, value, detail, change, icon: Icon, warning = false }) {
